@@ -1,3 +1,5 @@
+image: gitpod/workspace-python-3.11
+
 tasks:
   - name: dagster
     init: pip install "dagster==1.5.10"
