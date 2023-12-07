@@ -41,3 +41,15 @@ def orders_partitioned(context: AssetExecutionContext):
     file_orders = Path(f"data/raw_orders/{partition_date_str}.csv")
     num_lines = len(file_orders.read_text().splitlines())
     return MaterializeResult(metadata={"num_lines": num_lines})
+
+
+partitioned_asset_job = define_asset_job(
+    name="file_orders_and_orders_partitioned_job",
+    selection=AssetSelection.assets(file_orders_partitioned, orders_partitioned),
+    partitions_def=daily_partition_def,
+)
+
+asset_job = define_asset_job(
+    name="file_orders_and_orders_job",
+    selection=AssetSelection.assets(file_orders, orders),
+)

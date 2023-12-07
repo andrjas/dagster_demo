@@ -6,4 +6,5 @@ all_assets = load_assets_from_modules([assets])
 
 defs = Definitions(
     assets=all_assets,
+    jobs=[assets.partitioned_asset_job],
 )
