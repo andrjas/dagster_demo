@@ -11,3 +11,10 @@ def file_orders():
     folder.mkdir(parents=True, exist_ok=True)
     path = folder / f"raw_orders.csv"
     path.write_text(data.text)
+
+
+@asset(deps=[file_orders])
+def orders():
+    file_orders = Path(f"data/raw_orders/raw_orders.csv")
+    num_lines = len(file_orders.read_text().splitlines())
+    return MaterializeResult(metadata={"num_lines": num_lines})
